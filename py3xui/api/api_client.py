@@ -379,3 +379,15 @@ class ClientApi(BaseApi):
                 self.logger.error("Error parsing client: %s", client_json)
                 continue
         return clients
+
+    def get_last_online(self) -> list[dict[str, int]]:
+        endpoint = "panel/api/inbounds/lastOnline"
+        headers = {"Accept": "application/json"}
+
+        url = self._url(endpoint)
+        data: dict[str, Any] = {}
+        self.logger.info("Getting last online clients")
+
+        response = self._post(url, headers, data)
+        last_online = response.json().get(ApiFields.OBJ)
+        return last_online or []
