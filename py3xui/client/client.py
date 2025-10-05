@@ -17,6 +17,7 @@ class ClientFields:
     UP = "up"
     DOWN = "down"
 
+    LAST_ONLINE = "lastOnline"
     EXPIRY_TIME = "expiryTime"
 
     TOTAL = "total"
@@ -28,6 +29,7 @@ class ClientFields:
     SUB_ID = "subId"
     TG_ID = "tgId"
     TOTAL_GB = "totalGB"
+    COMMENT = "comment"
 
 
 class Client(BaseModel):
@@ -41,6 +43,7 @@ class Client(BaseModel):
         inbound_id (int | None): The ID of the inbound connection. Optional.
         up (int): The upload speed of the client. Optional.
         down (int): The download speed of the client. Optional.
+        last_online (int): The last online time of the client. Optional.
         expiry_time (int): The expiry time of the client. Optional.
         total (int): The total amount of data transferred by the client. Optional.
         reset (int): The time at which the client's data was last reset. Optional.
@@ -50,6 +53,7 @@ class Client(BaseModel):
         sub_id (str): The sub ID of the client. Optional.
         tg_id (str): The Telegram ID of the client. Optional.
         total_gb (int): The total amount of data transferred by the client in GB. Optional.
+        comment (str): The comment of the client. Optional.
     """
 
     email: str
@@ -62,6 +66,7 @@ class Client(BaseModel):
     up: int = 0
     down: int = 0
 
+    last_online: int = Field(default=0, alias=ClientFields.LAST_ONLINE)
     expiry_time: int = Field(default=0, alias=ClientFields.EXPIRY_TIME)  # type: ignore
 
     total: int = 0
@@ -73,6 +78,7 @@ class Client(BaseModel):
     sub_id: str = Field(default="", alias=ClientFields.SUB_ID)  # type: ignore
     tg_id: int | str | None = Field(default="", alias=ClientFields.TG_ID)  # type: ignore
     total_gb: int = Field(default=0, alias=ClientFields.TOTAL_GB)  # type: ignore
+    comment: str = ""
 
     model_config = ConfigDict(
         populate_by_name=True,
