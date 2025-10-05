@@ -17,6 +17,7 @@ class ClientFields:
     UP = "up"
     DOWN = "down"
 
+    LAST_ONLINE = "lastOnline"
     EXPIRY_TIME = "expiryTime"
 
     TOTAL = "total"
@@ -44,6 +45,7 @@ class Client(BaseModel):
         inbound_id (int | None): The ID of the inbound connection. Optional.
         up (int): The upload speed of the client. Optional.
         down (int): The download speed of the client. Optional.
+        last_online (int): The last online time of the client. Optional.
         expiry_time (int): The expiry time of the client. Optional.
         total (int): The total amount of data transferred by the client. Optional.
         reset (int): The time at which the client's data was last reset. Optional.
@@ -66,6 +68,7 @@ class Client(BaseModel):
     up: int = 0
     down: int = 0
 
+    last_online: int = Field(default=0, alias=ClientFields.LAST_ONLINE)
     expiry_time: int = Field(default=0, alias=ClientFields.EXPIRY_TIME)  # type: ignore
 
     total: int = 0
