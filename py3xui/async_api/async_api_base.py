@@ -185,7 +185,9 @@ class AsyncBaseApi:
             ValueError: If the invalid method is provided.
             httpx.RequestError: If the request fails.
             httpx.HTTPStatusError: If the maximum number of retries is exceeded."""
-        self.logger.debug("%s request to %s...", method, url)
+        self.logger.debug("%s request to %s", method, url)
+        self.logger.debug(f"Headers: {headers}")
+        self.logger.debug(f"Body: {kwargs}")
         for retry in range(1, self.max_retries + 1):
             try:
                 skip_check = kwargs.pop("skip_check", False)
@@ -220,6 +222,7 @@ class AsyncBaseApi:
                         response = await client.post(url, headers=headers, **kwargs)
                     else:
                         raise ValueError(f"Invalid method: {method}")
+                self.logger.debug(f"Response: {response.content}\n")
                 response.raise_for_status()
                 if skip_check:
                     return response
